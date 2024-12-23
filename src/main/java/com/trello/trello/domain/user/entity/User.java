@@ -2,12 +2,13 @@ package com.trello.trello.domain.user.entity;
 
 import com.trello.trello.global.entity.BaseTimeEntity;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 public class User extends BaseTimeEntity {
 
@@ -16,7 +17,7 @@ public class User extends BaseTimeEntity {
     private Long id;
 
     @Column(unique = true, nullable = false)
-    private String userEmail;
+    private String username;
 
     @Column(nullable = false)
     private String password;
@@ -25,8 +26,8 @@ public class User extends BaseTimeEntity {
 
     private String status;
 
-    public User(String userEmail, String password, String role, String status) {
-        this.userEmail = userEmail;
+    public User(String username, String password, String role, String status) {
+        this.username = username;
         this.password = password;
         this.role = role;
         this.status = status;

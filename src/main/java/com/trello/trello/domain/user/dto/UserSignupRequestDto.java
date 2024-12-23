@@ -10,7 +10,7 @@ public class UserSignupRequestDto {
 
     @NotBlank
     @Email
-    private final String userEmail;
+    private final String username;
 
     @NotBlank
     @Pattern(
@@ -22,8 +22,8 @@ public class UserSignupRequestDto {
     @NotBlank
     private final String role;
 
-    public UserSignupRequestDto(String userEmail, String password, String role) {
-        this.userEmail = userEmail;
+    public UserSignupRequestDto(String username, String password, String role) {
+        this.username = username;
         this.password = password;
         this.role = role;
     }

@@ -34,7 +34,7 @@ public class UserController {
         User user = userService.signup(signupDto);
         UserSignupResponseDto signupUser = new UserSignupResponseDto(
                 user.getId(),
-                user.getUserEmail(),
+                user.getUsername(),
                 user.getRole()
         );
 
@@ -43,33 +43,9 @@ public class UserController {
                 .body(signupUser);
     }
 
-    // 로그인
-    @PostMapping("/login")
-    public ResponseEntity<String> login(
-            @RequestBody UserLoginRequestDto loginDto,
-            HttpServletRequest request
-    ) {
-        HttpSession session = request.getSession(false);
-        if (session != null) {
-            throw new CustomException(ExceptionType.ALREADY_LOGIN);
-        }
-
-        User user = userService.login(loginDto);
-
-        session = request.getSession(true);
-        session.setAttribute("user", user);
-
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body("로그인 성공!");
-    }
-
     // 로그아웃
     @PostMapping("/logout")
-    public ResponseEntity<String> logout(HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
-        session.invalidate();
-
+    public ResponseEntity<String> logout() {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body("로그아웃 성공");
@@ -85,12 +61,10 @@ public class UserController {
 
     // 탈퇴
     @PutMapping("/{id}/deactivate")
-    public ResponseEntity<String> deleteUser(@RequestBody UserDeleteRequestDto dto,
-                           @PathVariable Long id,
-                           HttpServletRequest request
+    public ResponseEntity<String> deleteUser(
+            @RequestBody UserDeleteRequestDto dto,
+            @PathVariable Long id
     ) {
-        HttpSession session = request.getSession(false);
-        session.invalidate();
 
         userService.deleteUser(id, dto);
 

@@ -7,12 +7,12 @@ import lombok.Getter;
 public class UserResponseDto {
 
     private final Long id;
-    private final String userEmail;
+    private final String username;
     private String status;
 
     public UserResponseDto(User user) {
         this.id = user.getId();
-        this.userEmail = user.getUserEmail();
+        this.username = user.getUsername();
         this.status = "ACTIVE";
     }
 

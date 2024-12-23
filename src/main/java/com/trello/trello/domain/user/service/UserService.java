@@ -3,14 +3,13 @@ package com.trello.trello.domain.user.service;
 import com.trello.trello.domain.user.dto.UserDeleteRequestDto;
 import com.trello.trello.domain.user.dto.UserSignupRequestDto;
 import com.trello.trello.domain.user.dto.UserResponseDto;
-import com.trello.trello.domain.user.dto.UserLoginRequestDto;
 import com.trello.trello.domain.user.entity.User;
 import com.trello.trello.domain.user.repository.UserRepository;
-import com.trello.trello.global.config.PasswordEncoder;
 import com.trello.trello.global.exception.CustomException;
 import com.trello.trello.global.exception.ExceptionType;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
@@ -21,11 +20,11 @@ import java.util.Objects;
 public class UserService {
 
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     // 회원가입
     public User signup(UserSignupRequestDto registerDto) {
-        if (userRepository.existsByUserEmail(registerDto.getUserEmail())) {
+        if (userRepository.existsByUsername(registerDto.getUsername())) {
             throw new CustomException(ExceptionType.EXIST_USER);
         }
 
@@ -34,7 +33,7 @@ public class UserService {
         }
 
         User user = new User(
-                registerDto.getUserEmail(),
+                registerDto.getUsername(),
                 passwordEncoder.encode(registerDto.getPassword()),
                 registerDto.getRole(),
                 "ACTIVE"
@@ -44,28 +43,11 @@ public class UserService {
         return user;
     }
 
-    // 로그인
-    public User login(UserLoginRequestDto signupDto) {
-        User user = userRepository.findByUserEmail(signupDto.getUserEmail()).orElseThrow(() -> new CustomException(ExceptionType.NOT_LOGIN));
-
-        if (Objects.equals(user.getStatus(), "INACTIVE")) {
-            throw new CustomException(ExceptionType.DELETED_USER);
-        }
-
-        if (!passwordEncoder.matches(signupDto.getPassword(), user.getPassword())) {
-            throw new CustomException(ExceptionType.PASSWORD_NOT_CORRECT);
-        }
-
-        return user;
-    }
-
     // 아이디로 유저찾기
     public UserResponseDto findUserById(Long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new CustomException(ExceptionType.USER_NOT_MATCH));
 
-        UserResponseDto findUser = new UserResponseDto(user);
-
-        return findUser;
+        return new UserResponseDto(user);
     }
 
     // 탈퇴

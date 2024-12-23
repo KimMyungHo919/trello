@@ -6,13 +6,13 @@ import lombok.Getter;
 public class UserSignupResponseDto {
 
     private final Long id;
-    private final String userEmail;
+    private final String username;
     private final String role;
     private final String status;
 
-    public UserSignupResponseDto(Long id, String userEmail, String role) {
+    public UserSignupResponseDto(Long id, String username, String role) {
         this.id = id;
-        this.userEmail = userEmail;
+        this.username = username;
         this.role = role;
         this.status = "ACTIVE";
     }
