@@ -23,10 +23,13 @@ public class User extends BaseTimeEntity {
 
     private String role;
 
-    public User(String userEmail, String password, String role) {
+    private String status;
+
+    public User(String userEmail, String password, String role, String status) {
         this.userEmail = userEmail;
         this.password = password;
         this.role = role;
+        this.status = status;
     }
 
     // TODO: 패스워드 인코딩으로 확인하고 바꿔줘야함
@@ -34,4 +37,7 @@ public class User extends BaseTimeEntity {
         this.password = newPassword;
     }
 
+    public void deleteUser() {
+        this.status = "INACTIVE";
+    }
 }

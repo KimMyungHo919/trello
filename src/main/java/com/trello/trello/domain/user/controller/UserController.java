@@ -1,9 +1,6 @@
 package com.trello.trello.domain.user.controller;
 
-import com.trello.trello.domain.user.dto.UserSignupRequestDto;
-import com.trello.trello.domain.user.dto.UserResponseDto;
-import com.trello.trello.domain.user.dto.UserLoginDto;
-import com.trello.trello.domain.user.dto.UserSignupResponseDto;
+import com.trello.trello.domain.user.dto.*;
 import com.trello.trello.domain.user.entity.User;
 import com.trello.trello.domain.user.service.UserService;
 import com.trello.trello.global.exception.CustomException;
@@ -49,7 +46,7 @@ public class UserController {
     // 로그인
     @PostMapping("/login")
     public ResponseEntity<String> login(
-            @RequestBody UserLoginDto loginDto,
+            @RequestBody UserLoginRequestDto loginDto,
             HttpServletRequest request
     ) {
         HttpSession session = request.getSession(false);
@@ -80,9 +77,23 @@ public class UserController {
 
     // 아이디로 유저찾기
     @GetMapping("/{id}")
-    public ResponseEntity<UserResponseDto> findUserById (@PathVariable Long id) {
+    public ResponseEntity<UserResponseDto> findUserById(@PathVariable Long id) {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(userService.findUserById(id));
+    }
+
+    // 탈퇴
+    @PutMapping("/{id}/deactivate")
+    public ResponseEntity<String> deleteUser(@RequestBody UserDeleteRequestDto dto,
+                           @PathVariable Long id,
+                           HttpServletRequest request
+    ) {
+        HttpSession session = request.getSession(false);
+        session.invalidate();
+
+        userService.deleteUser(id, dto);
+
+        return ResponseEntity.status(HttpStatus.OK).body("탈퇴완료!");
     }
 }

@@ -8,10 +8,12 @@ public class UserResponseDto {
 
     private final Long id;
     private final String userEmail;
+    private String status;
 
     public UserResponseDto(User user) {
         this.id = user.getId();
         this.userEmail = user.getUserEmail();
+        this.status = "ACTIVE";
     }
 
 
