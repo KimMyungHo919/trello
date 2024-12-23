@@ -37,7 +37,7 @@ public class UserController {
         User user = userService.signup(signupDto);
         UserSignupResponseDto signupUser = new UserSignupResponseDto(
                 user.getId(),
-                user.getUsername(),
+                user.getUserEmail(),
                 user.getRole()
         );
 
@@ -48,7 +48,7 @@ public class UserController {
 
     // 로그인
     @PostMapping("/login")
-    public String login(
+    public ResponseEntity<String> login(
             @RequestBody UserLoginDto loginDto,
             HttpServletRequest request
     ) {
@@ -62,21 +62,27 @@ public class UserController {
         session = request.getSession(true);
         session.setAttribute("user", user);
 
-        return "로그인 성공!";
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body("로그인 성공!");
     }
 
     // 로그아웃
     @PostMapping("/logout")
-    public String logout(HttpServletRequest request) {
+    public ResponseEntity<String> logout(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         session.invalidate();
 
-        return "로그아웃 성공";
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body("로그아웃 성공");
     }
 
     // 아이디로 유저찾기
     @GetMapping("/{id}")
-    public UserResponseDto findUserById (@PathVariable Long id) {
-        return userService.findUserById(id);
+    public ResponseEntity<UserResponseDto> findUserById (@PathVariable Long id) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(userService.findUserById(id));
     }
 }

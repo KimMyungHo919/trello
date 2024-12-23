@@ -1,5 +1,6 @@
 package com.trello.trello.domain.user.dto;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
@@ -8,7 +9,8 @@ import lombok.Getter;
 public class UserSignupRequestDto {
 
     @NotBlank
-    private final String username;
+    @Email
+    private final String userEmail;
 
     @NotBlank
     @Pattern(
@@ -20,8 +22,8 @@ public class UserSignupRequestDto {
     @NotBlank
     private final String role;
 
-    public UserSignupRequestDto(String username, String password, String role) {
-        this.username = username;
+    public UserSignupRequestDto(String userEmail, String password, String role) {
+        this.userEmail = userEmail;
         this.password = password;
         this.role = role;
     }

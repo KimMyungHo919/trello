@@ -23,8 +23,8 @@ public class UserService {
 
     // 회원가입
     public User signup(UserSignupRequestDto registerDto) {
-        if (userRepository.existsByUsername(registerDto.getUsername())) {
-            throw new CustomException(ExceptionType.EXIST_USER);
+        if (userRepository.existsByUserEmail(registerDto.getUserEmail())) {
+            throw new CustomException(ExceptionType.USER_NOT_MATCH);
         }
 
         if (!Objects.equals(registerDto.getRole(), "ROLE_USER") && !Objects.equals(registerDto.getRole(), "ROLE_ADMIN")) {
@@ -32,12 +32,23 @@ public class UserService {
         }
 
         User user = new User(
-                registerDto.getUsername(),
+                registerDto.getUserEmail(),
                 passwordEncoder.encode(registerDto.getPassword()),
                 registerDto.getRole()
                 );
 
         userRepository.save(user);
+        return user;
+    }
+
+    // 로그인
+    public User login(UserLoginDto signupDto) {
+        User user = userRepository.findByUserEmail(signupDto.getUserEmail()).orElseThrow(() -> new CustomException(ExceptionType.NOT_LOGIN));
+
+        if (!passwordEncoder.matches(signupDto.getPassword(), user.getPassword())) {
+            throw new CustomException(ExceptionType.PASSWORD_NOT_CORRECT);
+        }
+
         return user;
     }
 
@@ -50,14 +61,4 @@ public class UserService {
         return findUser;
     }
 
-    // 로그인
-    public User login(UserLoginDto signupDto) {
-        User user = userRepository.findByUsername(signupDto.getUsername()).orElseThrow(() -> new CustomException(ExceptionType.EXIST_USER));
-
-        if (!passwordEncoder.matches(signupDto.getPassword(), user.getPassword())) {
-            throw new CustomException(ExceptionType.PASSWORD_NOT_CORRECT);
-        }
-
-        return user;
-    }
 }
