@@ -32,11 +32,6 @@ public class User extends BaseTimeEntity {
         this.status = status;
     }
 
-    // TODO: 패스워드 인코딩으로 확인하고 바꿔줘야함
-    public void changePassword(String oldPassword, String newPassword) {
-        this.password = newPassword;
-    }
-
     public void deleteUser() {
         this.status = "INACTIVE";
     }
