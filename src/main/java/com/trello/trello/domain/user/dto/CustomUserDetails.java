@@ -7,6 +7,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.ArrayList;
 import java.util.Collection;
 
+
+// 사용자 정보를 UserDetails 객체로 감싸서 Spring Security에서 사용할 수 있도록함
 public class CustomUserDetails implements UserDetails {
 
     private final User user;
@@ -17,6 +19,7 @@ public class CustomUserDetails implements UserDetails {
     }
 
 
+    // 사용자의 역할을 GrantedAuthority로 반환하여, 사용자가 가진 권한을 Spring Security에서 처리할 수 있게함
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 

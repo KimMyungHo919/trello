@@ -5,9 +5,11 @@ import com.trello.trello.domain.user.entity.User;
 import com.trello.trello.global.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Getter
+@Setter
 public class Comment extends BaseTimeEntity {
 
     @Id

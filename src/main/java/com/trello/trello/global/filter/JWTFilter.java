@@ -14,6 +14,8 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+
+// API 요청에 포함된 JWT 토큰을 검증하고, 유효한 토큰일 경우 사용자 정보를 SecurityContext에 저장하여 인증 상태를 유지
 public class JWTFilter extends OncePerRequestFilter {
 
     private final JWTUtil jwtUtil;
@@ -23,11 +25,13 @@ public class JWTFilter extends OncePerRequestFilter {
         this.jwtUtil = jwtUtil;
     }
 
+    // 요청의 Authorization 헤더에서 JWT 토큰을 추출하고, 토큰이 만료되지 않았는지 확인
+    // 유효한 토큰일 경우, 사용자 정보를 CustomUserDetails로 만들고, SecurityContextHolder에 인증 객체를 설정
     @Override
-           protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
         //request에서 Authorization 헤더를 찾음
-        String authorization= request.getHeader("Authorization");
+        String authorization = request.getHeader("Authorization");
 
         //Authorization 헤더 검증
         if (authorization == null || !authorization.startsWith("Bearer ")) {

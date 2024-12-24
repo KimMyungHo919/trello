@@ -14,6 +14,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+
+// Spring Security의 전반적인 설정을 담당합니다. 인증 및 인가 관련 규칙을 설정하고, SecurityLoginFilter와 JWTFilter를 필터 체인에 추가
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {

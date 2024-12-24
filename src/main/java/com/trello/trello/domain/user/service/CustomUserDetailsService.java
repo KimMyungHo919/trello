@@ -10,6 +10,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+
+// 사용자를 DB에서 조회하고, UserDetails 객체를 반환
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
@@ -20,6 +22,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
+    // 주어진 username을 통해 DB에서 사용자 정보를 조회하고, 이를 CustomUserDetails 객체로 반환
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 

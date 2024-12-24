@@ -8,6 +8,7 @@ import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
+// JWT 토큰을 생성하고, 토큰의 유효성 및 정보를 추출하는 기능
 @Component
 public class JWTUtil {
 
@@ -27,11 +28,13 @@ public class JWTUtil {
         return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("role", String.class);
     }
 
+    // 토큰이 만료되었는지 확인
     public Boolean isExpired(String token) {
 
         return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().getExpiration().before(new Date());
     }
 
+    // 주어진 username, role, 만료 시간 등을 사용하여 JWT를 생성
     public String createJwt(String username, String role, Long expiredMs) {
 
         return Jwts.builder()

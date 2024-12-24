@@ -6,6 +6,7 @@ import com.trello.trello.domain.user.entity.User;
 import com.trello.trello.global.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @Entity
 @Getter
+@Setter
 public class Card extends BaseTimeEntity {
 
     @Id
