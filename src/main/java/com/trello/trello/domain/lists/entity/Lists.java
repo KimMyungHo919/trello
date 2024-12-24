@@ -1,12 +1,15 @@
-package com.trello.trello.domain.list.entity;
+package com.trello.trello.domain.lists.entity;
 
+import com.trello.trello.global.entity.BaseTimeEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.Getter;
 
 @Entity
-public class List {
+@Getter
+public class Lists extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

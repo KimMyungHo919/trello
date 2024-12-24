@@ -1,10 +1,15 @@
 package com.trello.trello.domain.user.entity;
 
+import com.trello.trello.domain.comment.entity.Comment;
+import com.trello.trello.domain.workspacemember.entity.WorkspaceMember;
 import com.trello.trello.global.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -25,6 +30,12 @@ public class User extends BaseTimeEntity {
     private String role;
 
     private String status;
+
+    @OneToMany(mappedBy = "user")
+    private List<WorkspaceMember> workspaces = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<Comment> comments = new ArrayList<>();
 
     public User(String username, String password, String role, String status) {
         this.username = username;
