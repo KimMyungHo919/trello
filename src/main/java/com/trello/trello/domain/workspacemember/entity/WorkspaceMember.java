@@ -22,6 +22,5 @@ public class WorkspaceMember extends BaseTimeEntity {
     @JoinColumn(name = "workspace_id")
     private Workspace workspace;
 
-    @Enumerated(EnumType.STRING)
     private String role;
 }
