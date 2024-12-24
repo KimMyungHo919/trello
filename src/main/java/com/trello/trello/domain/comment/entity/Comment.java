@@ -26,4 +26,14 @@ public class Comment extends BaseTimeEntity {
     @JoinColumn(name = "card_id")
     private Card card;
 
+    public void setUser(User user) {
+        this.user = user;
+        user.addComment(this);
+    }
+
+    public void setCard(Card card) {
+        this.card = card;
+        card.addComment(this);
+    }
+
 }

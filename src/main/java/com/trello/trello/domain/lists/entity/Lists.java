@@ -25,4 +25,13 @@ public class Lists extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "list")
     private List<Card> cards = new ArrayList<>();
+
+    public void setBoard(Board board) {
+        this.board = board;
+        board.addLists(this);
+    }
+
+    public void addCard(Card card) {
+        this.cards.add(card);
+    }
 }

@@ -1,6 +1,7 @@
 package com.trello.trello.domain.user.entity;
 
 import com.trello.trello.domain.comment.entity.Comment;
+import com.trello.trello.domain.workspace.entity.Workspace;
 import com.trello.trello.domain.workspacemember.entity.WorkspaceMember;
 import com.trello.trello.global.entity.BaseTimeEntity;
 import jakarta.persistence.*;
@@ -32,7 +33,7 @@ public class User extends BaseTimeEntity {
     private String status;
 
     @OneToMany(mappedBy = "user")
-    private List<WorkspaceMember> workspaces = new ArrayList<>();
+    private List<WorkspaceMember> workspaceMembers = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
     private List<Comment> comments = new ArrayList<>();
@@ -46,5 +47,13 @@ public class User extends BaseTimeEntity {
 
     public void deleteUser() {
         this.status = "INACTIVE";
+    }
+
+    public void addWorkspaceMember(WorkspaceMember workspaceMember) {
+        this.workspaceMembers.add(workspaceMember);
+    }
+
+    public void addComment(Comment comment) {
+        this.comments.add(comment);
     }
 }

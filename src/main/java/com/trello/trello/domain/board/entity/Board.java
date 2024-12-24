@@ -27,4 +27,13 @@ public class Board extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "board")
     private List<Lists> lists = new ArrayList<>();
+
+    public void setWorkspace(Workspace workspace) {
+        this.workspace = workspace;
+        workspace.addBoard(this);
+    }
+
+    public void addLists(Lists lists) {
+        this.lists.add(lists);
+    }
 }

@@ -23,4 +23,14 @@ public class WorkspaceMember extends BaseTimeEntity {
     private Workspace workspace;
 
     private String role;
+
+    public void setUser(User user) {
+        this.user = user;
+        user.addWorkspaceMember(this);
+    }
+
+    public void setWorkspace(Workspace workspace) {
+        this.workspace = workspace;
+        workspace.addWorkspaceMember(this);
+    }
 }

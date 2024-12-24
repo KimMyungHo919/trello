@@ -35,4 +35,13 @@ public class Card extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "card")
     private List<Comment> comments = new ArrayList<>();
+
+    public void setLists(Lists lists) {
+        this.list = lists;
+        list.addCard(this);
+    }
+
+    public void addComment(Comment comment) {
+        this.comments.add(comment);
+    }
 }
